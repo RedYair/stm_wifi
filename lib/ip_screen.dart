@@ -22,7 +22,7 @@ class IPScreen extends StatefulWidget {
 }
 class _IPScreenState extends State<IPScreen> {
   Socket sock;
-
+  String test;
   String ipAddress;
   String ipAddresshost;
   Color colorButton;
