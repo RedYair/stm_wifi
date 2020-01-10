@@ -378,7 +378,7 @@ class _IPScreenState extends State<IPScreen> {
                   ),
                 ),
               ),
-              Messages(socket: sock,sockOn: sockOn,),
+              Messages(socket: sock,sockOn: sockOn),
               LetterType(sock),
             ],
           ),
