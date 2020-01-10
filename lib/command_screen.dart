@@ -1,16 +1,13 @@
-
-import 'package:flutter/foundation.dart';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class SocketIP extends StatelessWidget {
 
-  Socket socket;
-  String ip;
+ Socket socket;
 
-  SocketIP(Socket s, String i) {
+  SocketIP(Socket s) {
     this.socket = s;
-    this.ip = i;
   }
 
 @override
@@ -21,7 +18,7 @@ Widget build(BuildContext context) {
     home: MyHomePage(
       title: title,
       channel: socket,
-      IP: ip
+
     ),
   );
 }
@@ -30,9 +27,8 @@ Widget build(BuildContext context) {
 class MyHomePage extends StatefulWidget {
   final String title;
   final Socket channel;
-  final String IP;
 
-  MyHomePage({Key key, @required this.title, @required this.channel,@required this.IP})
+  MyHomePage({Key key, @required this.title, @required this.channel})
       : super(key: key);
 
   @override
@@ -125,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     color: Colors.red,
                     onPressed: _test,
                   ),
-                Container(
+             /*   Container(
                  // child: Text(receiveMessage != null ? receiveMessage:"tupo",style: TextStyle(color: Colors.black, fontSize: 20),),
                     child: StreamBuilder(
                       stream: widget.channel,
@@ -138,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         );
                       },
                     )
-                )
+                )*/
                 ],
               ),
             )
@@ -157,24 +153,24 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _mode() {
-    widget.channel.writeln("GET /TUPITO");
+  //  widget.channel.writeln("GET /TUPITO");
     //flutterSocket.tryConnect();
   }
 
   void _tempUp() {
-    widget.channel.write("GET /LOL");
+   // widget.channel.write("GET /LOL");
    // flutterSocket.tryDisconnect();
   }
 
   void _tempDown() {
-    widget.channel.write("GET /q");
+  //  widget.channel.write("GET /q");
   }
   void _test() {
-    widget.channel.write("GET /THIS IS A TEST");
+   // widget.channel.write("GET /THIS IS A TEST");
   }
   @override
   void dispose() {
-    widget.channel.close();
+  //  widget.channel.close();
 
     super.dispose();
   }

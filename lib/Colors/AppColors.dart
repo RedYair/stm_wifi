@@ -14,4 +14,6 @@ class AppColors {
   static const Color darkIcon = Color(0xFF767676);
   static const Color darkIconButton = Colors.white;
   static const Color darkButtonBackground = Color(0xFF1F1F1F);
+  static const Color colorPoweroff = Color(0xFFEF5252);
+  static const Color colorPoweron = Color(0xFF3FF192);
 }
