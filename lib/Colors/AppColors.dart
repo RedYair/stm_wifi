@@ -16,4 +16,5 @@ class AppColors {
   static const Color darkButtonBackground = Color(0xFF1F1F1F);
   static const Color colorPoweroff = Color(0xFFEF5252);
   static const Color colorPoweron = Color(0xFF3FF192);
+  static const Color GreenColor = Color(0xFF3FF192);
 }

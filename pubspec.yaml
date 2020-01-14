@@ -28,6 +28,7 @@ dependencies:
   get_ip: ^0.3.0
   wifi_configuration: ^1.2.1
   flutter_socket_plugin: ^1.0.1
+  circular_check_box: ^1.0.1
 
 dev_dependencies:
   flutter_test:

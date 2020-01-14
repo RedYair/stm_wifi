@@ -4,6 +4,7 @@ import 'package:get_ip/get_ip.dart';
 import 'package:stm_wifi/letter_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'Colors/AppColors.dart';
+import 'marquesina_Screen.dart';
 import 'messages_screen.dart';
 
 /*void main(){
@@ -46,7 +47,7 @@ class _IPScreenState extends State<IPScreen> {
 
     return SafeArea(
       child: DefaultTabController(
-        length: 3,
+        length: 4,
         initialIndex: 0,
         child: Scaffold(
           appBar: AppBar(
@@ -64,7 +65,8 @@ class _IPScreenState extends State<IPScreen> {
            bottom: TabBar(tabs: <Widget>[
             Tab(icon: Icon(Icons.home)),
             Tab(icon: Icon(Icons.format_color_text)),
-            Tab(icon: Icon(Icons.format_size))
+            Tab(icon: Icon(Icons.format_size)),
+            Tab(icon: Icon(Icons.border_clear))
          //   Tab(icon: Icon(Icons.favorite))
     ]),),
           body: TabBarView(
@@ -113,11 +115,11 @@ class _IPScreenState extends State<IPScreen> {
                                   {
                                     debugPrint(sock.toString());
 
-                                    if(sock == null) {connectWifi();debugPrint("sock open");sockOn=true;}
-                                    else{sock.close();sock=null;debugPrint("sock close"+sock.toString());sockOn=false;}
+                                    if(sock == null) {connectWifi();debugPrint("sock open");}
+                                    else{sock.close();sock=null;debugPrint("sock close"+sock.toString());}
                                     setState(
-
                                           () {
+                                            sockOn = sockOn==false ? true : false;
                                         background =
                                         background == AppColors.darkBackground
                                             ? AppColors.lightBackground
@@ -329,57 +331,14 @@ class _IPScreenState extends State<IPScreen> {
                             ],
                           ),
                         ),
-                    /*    Material(
-                          color: AppColors.transparent,
-                          child: Container(
-                            width: size.width,
-                            height: size.height * 0.20,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: <Widget>[
-                                Icon(
-                                  Icons.adjust,
-                                  color: Color(0xFF584BD2),
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  children: <Widget>[
-                                    InkWell(
-                                      onTap: () {
-                                        print("Start Pressed");
-                                      },
-                                      splashColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      child: Icon(
-                                        Icons.rss_feed,
-                                        color: Color(0xFF584BD2),
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        print("Settings Pressed");
-                                      },
-                                      splashColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      child: Icon(
-                                        Icons.settings,
-                                        color: icon,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),*/
-
                       ],
                     ),
                   ),
                 ),
               ),
               Messages(socket: sock,sockOn: sockOn),
-              LetterType(sock),
+              LetterType(socket: sock,sockOn: sockOn),
+              Marquee(socket: sock,sockOn: sockOn),
             ],
           ),
 
