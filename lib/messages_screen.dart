@@ -20,10 +20,12 @@ class _MessagesState extends State<Messages> {
   Color mensaje1color = Colors.white70;
   Color mensaje2color = Colors.white70;
   bool _isDisabledButtonSend = false;
-  bool _isDisabledCheck =false;
+  bool _isReadyScreen = false;
+
 
   @override
   Widget build(BuildContext context) {
+    Color colorIconMessage = widget.sockOn == false ? AppColors.darkBackground:AppColors.lightBackground;
     return Container(
       color: widget.sockOn == true ? AppColors.darkBackground:Colors.white,
       child: Center(
@@ -32,7 +34,7 @@ class _MessagesState extends State<Messages> {
           children: <Widget>[
                 Container(
                   height: MediaQuery.of(context).size.height/5,
-                  color: Colors.white,//widget.sockOn == true ? Colors.white:AppColors.darkBackground,
+                  color: Colors.transparent,//widget.sockOn == true ? Colors.white:AppColors.darkBackground,
                   child:Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: TextField(
@@ -40,10 +42,24 @@ class _MessagesState extends State<Messages> {
                       enabled: widget.sockOn == true ? true:false,
                       maxLength: 192,
                       maxLines: 6,
+                      cursorColor: Colors.white,
+                      style: TextStyle(fontSize:18,color: Colors.white,letterSpacing: 2),
+                      onTap: (){
+                        setState(() {
+                          colorIconMessage= Colors.blue;
+                        });
+                       },
                       decoration: InputDecoration(
                           prefixText: "Mensaje: ",
                           hintText: "Escribir el mensaje aquí",
+                          hintStyle: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              letterSpacing: 2,
+                              color: widget.sockOn == false ? AppColors.darkBackground:AppColors.lightBackground),
                           border: OutlineInputBorder(),
+                          icon: Icon(Icons.mail,color:colorIconMessage ),
+                          counterStyle: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),
 
                       ),
                     ),
@@ -55,41 +71,62 @@ class _MessagesState extends State<Messages> {
                       height: MediaQuery.of(context).size.height - MediaQuery.of(context).size.height/3,
                       child: Column( mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          RaisedButton(
-                           child: Text("ENVIAR"),
-                           onPressed: _isDisabledButtonSend == true ? (){
+                          Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              RaisedButton(
+                               child: Text("ENVIAR"),
+                               onPressed: _isDisabledButtonSend == true ? (){
 
-                             setState(() {
-                               mensaje1color = Colors.white70;
-                               mensaje2color = Colors.white70;
-                               _isDisabledButtonSend=false;
-                             });
-                             widget.socket.write("GET /"+ myController.text);
-                }:null,
+                                 setState(() {
+                                   mensaje1color = Colors.white70;
+                                   mensaje2color = Colors.white70;
+                                   _isDisabledButtonSend=false;
+                                   _isReadyScreen=false;
+                                 });
+                                 if(myController.text.length==0) debugPrint("El mensaje esta vacio");
+                                   else widget.socket.write("GET /"+ myController.text);
+                              }:null),
+                              RaisedButton(
+                                child: Text("CANCELAR"),
+                                onPressed: _isDisabledButtonSend == true ? (){
 
-              ),
+                                  setState(() {
+                                    mensaje1color = Colors.white70;
+                                    mensaje2color = Colors.white70;
+                                    _isDisabledButtonSend=false;
+                                    _isReadyScreen=false;
+                                  });
+                                  widget.socket.write("GET /CANCELAR");
+                                }:null)
+                            ],
+                          ),
                           Center(
                             child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
                                 RaisedButton(
                                   child: Text("Mensaje 1"),
-                                  onPressed: (){
+                                  onPressed: _isReadyScreen ? null:(){
                                     setState(() {
                                       mensaje1color = AppColors.GreenColor;
                                       mensaje2color = Colors.white70;
                                       _isDisabledButtonSend = true;
+                                      _isReadyScreen = true;
+
                                     });
+                                    widget.socket.write("GET /MSJ1");
                                   },
                                   color: mensaje1color,
                                 ),
                                 RaisedButton(
                                   child: Text("Mensaje 2"),
-                                  onPressed: (){
+                                  onPressed: _isReadyScreen ? null:(){
                                     setState(() {
                                       mensaje2color = AppColors.GreenColor;
                                       mensaje1color = Colors.white70;
                                       _isDisabledButtonSend = true;
+                                      _isReadyScreen=true;
                                     });
+                                    widget.socket.write("GET /MSJ2");
                                   },
                                   color: mensaje2color,
                                 ),
@@ -107,7 +144,8 @@ class _MessagesState extends State<Messages> {
                                       onChanged: (bool value) {
                                         setState(() {
                                           check1 = value;
-                                          _isDisabledCheck=true;
+
+                                       //   _isDisabledCheck=true;
                                         });
                                       }
                                   ),
@@ -122,7 +160,7 @@ class _MessagesState extends State<Messages> {
                                       onChanged: (bool value) {
                                         setState(() {
                                           check2 = value;
-                                          _isDisabledCheck=true;
+                                         // _isDisabledCheck=true;
                                         });
                                       }
                                   ),
@@ -130,13 +168,23 @@ class _MessagesState extends State<Messages> {
                               ),
                               RaisedButton(
                                 child: Text("ACTIVAR"),
-                                onPressed: _isDisabledCheck == true ? (){
+                                onPressed: _isDisabledButtonSend==false &&
+                                          (check1!=false || check2!=false) ? (){
                                   setState(() {
-                                    _isDisabledCheck=false;
-                                    check1=false;
-                                    check2=false;
-                                  });
-                                }: null,
+                                   // _isDisabledCheck=false;
+                                    if(check1&&!check2) {
+                                      widget.socket.write("GET /MS1");
+                                    }
+                                    else if(check2&&!check1) {
+                                      widget.socket.write("GET /MS2");
+                                    }
+                                    else if(check1&&check2) {
+                                      widget.socket.write("GET /MS3");
+                                    }
+                                    //check1=false;
+                                    //check2=false;
+
+                                  });}: null,
                               ),
                             ],
                           )

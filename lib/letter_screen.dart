@@ -39,12 +39,15 @@ class _LetterTypeState extends State<LetterType> {
       child: Container(
         color: widget.sockOn == true ? AppColors.darkBackground:Colors.white,
         child: Column(mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Container(
+         children: <Widget>[
+         Container(
               padding: EdgeInsets.only(top: 20),
               child: Text("TAMAÑO y TIPO de letra",
                       style: TextStyle(
-                          color: widget.sockOn == true ? Colors.white:Colors.black, fontSize: 24),
+                          color: widget.sockOn == true ? Colors.white:Colors.black,
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                      ),
               ),
             ),
          Container(
@@ -80,6 +83,39 @@ class _LetterTypeState extends State<LetterType> {
              ),
            ),
          ),
+         Container(
+             child: Padding(
+               padding: const EdgeInsets.only(top:10.0),
+               child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                 children: <Widget>[
+                   RaisedButton(
+                     child: Text(switch1 == true ? "Corre 1\nCorre2":""),
+                     onPressed: switch1 == true ? (){
+                       switch1 == true ? widget.socket.write("GET /1"):debugPrint("vacio");
+                     }:null,
+                   ),//UNO DOBLE
+                   RaisedButton(
+                     child: Text(switch1 == true ? "Corre 1\nFijo 2":"Fijo"),
+                     onPressed: (){
+                       switch1 == true ? widget.socket.write("GET /3"):widget.socket.write("GET /4");
+                     },
+                   ),//DOS SIMPLE
+                   RaisedButton(
+                     child: Text(switch1 == true ? "Fijo 1\nCorre 2":"Corre"),
+                     onPressed: (){
+                       switch1 == true ? widget.socket.write("GET /5"):widget.socket.write("GET /6");
+                     },
+                   ),//TRES SIMPLE
+                   RaisedButton(
+                     child: Text(switch1 == true ? "Fijo 1\nFijo 2":""),
+                     onPressed: switch1 == true ? (){
+                       switch1 == true ? widget.socket.write("GET /7"):debugPrint("vacio");
+                     }:null,
+                   ),//CUATRO DOBLE
+                 ],
+               ),
+             ),
+           ),
          Flexible(
           child: SingleChildScrollView(
            child: Container(
@@ -90,7 +126,7 @@ class _LetterTypeState extends State<LetterType> {
                     Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         CircularCheckBox(
-                          inactiveColor: Colors.white,
+                          inactiveColor: widget.sockOn ? AppColors.lightBackground:AppColors.darkBackground,
                             value: check1,
                             onChanged: (bool value) {
                               setState(() {
@@ -107,7 +143,7 @@ class _LetterTypeState extends State<LetterType> {
                             }
                         ),
                         CircularCheckBox(
-                            inactiveColor: Colors.white,
+                            inactiveColor: widget.sockOn ? AppColors.lightBackground:AppColors.darkBackground,
                             value: check11,
                             onChanged: switch1 == true ?  (bool value) {
 
@@ -133,7 +169,7 @@ class _LetterTypeState extends State<LetterType> {
                     Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         CircularCheckBox(
-                            inactiveColor: Colors.white,
+                            inactiveColor: widget.sockOn ? AppColors.lightBackground:AppColors.darkBackground,
                             value: check2,
                             onChanged: (bool value) {
                               setState(() {
@@ -150,7 +186,7 @@ class _LetterTypeState extends State<LetterType> {
                             }
                         ),
                         CircularCheckBox(
-                            inactiveColor: Colors.white,
+                            inactiveColor: widget.sockOn ? AppColors.lightBackground:AppColors.darkBackground,
                             value: check21,
                             onChanged: switch1 == true ?  (bool value) {
 
@@ -176,7 +212,7 @@ class _LetterTypeState extends State<LetterType> {
                     Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         CircularCheckBox(
-                            inactiveColor: Colors.white,
+                            inactiveColor: widget.sockOn ? AppColors.lightBackground:AppColors.darkBackground,
                             value: check3,
                             onChanged: (bool value) {
                               setState(() {
@@ -193,7 +229,7 @@ class _LetterTypeState extends State<LetterType> {
                             }
                         ),
                         CircularCheckBox(
-                            inactiveColor: Colors.white,
+                            inactiveColor: widget.sockOn ? AppColors.lightBackground:AppColors.darkBackground,
                             value: check31,
                             onChanged: switch1 == true ?  (bool value) {
 
@@ -219,7 +255,7 @@ class _LetterTypeState extends State<LetterType> {
                     Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         CircularCheckBox(
-                            inactiveColor: Colors.white,
+                            inactiveColor: widget.sockOn ? AppColors.lightBackground:AppColors.darkBackground,
                             value: check4,
                             onChanged: (bool value) {
                               setState(() {
@@ -236,7 +272,7 @@ class _LetterTypeState extends State<LetterType> {
                             }
                         ),
                         CircularCheckBox(
-                            inactiveColor: Colors.white,
+                            inactiveColor: widget.sockOn ? AppColors.lightBackground:AppColors.darkBackground,
                             value: check41,
                             onChanged: switch1 == true ?  (bool value) {
 
@@ -262,7 +298,7 @@ class _LetterTypeState extends State<LetterType> {
                     Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         CircularCheckBox(
-                            inactiveColor: Colors.white,
+                            inactiveColor: widget.sockOn ? AppColors.lightBackground:AppColors.darkBackground,
                             value: check5,
                             onChanged: (bool value) {
                               setState(() {
@@ -279,7 +315,7 @@ class _LetterTypeState extends State<LetterType> {
                             }
                         ),
                         CircularCheckBox(
-                            inactiveColor: Colors.white,
+                            inactiveColor: widget.sockOn ? AppColors.lightBackground:AppColors.darkBackground,
                             value: check51,
                             onChanged: switch1 == true ?  (bool value) {
 
@@ -305,7 +341,7 @@ class _LetterTypeState extends State<LetterType> {
                     Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         CircularCheckBox(
-                            inactiveColor: Colors.white,
+                            inactiveColor: widget.sockOn ? AppColors.lightBackground:AppColors.darkBackground,
                             value: check6,
                             onChanged: (bool value) {
                               setState(() {
@@ -322,7 +358,7 @@ class _LetterTypeState extends State<LetterType> {
                             }
                         ),
                         CircularCheckBox(
-                            inactiveColor: Colors.white,
+                            inactiveColor: widget.sockOn ? AppColors.lightBackground:AppColors.darkBackground,
                             value: check61,
                             onChanged: switch1 == true ?  (bool value) {
 
@@ -348,7 +384,7 @@ class _LetterTypeState extends State<LetterType> {
                     Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         CircularCheckBox(
-                            inactiveColor: Colors.white,
+                            inactiveColor: widget.sockOn ? AppColors.lightBackground:AppColors.darkBackground,
                             value: check7,
                             onChanged: (bool value) {
                               setState(() {
@@ -365,7 +401,7 @@ class _LetterTypeState extends State<LetterType> {
                             }
                         ),
                         CircularCheckBox(
-                            inactiveColor: Colors.white,
+                            inactiveColor: widget.sockOn ? AppColors.lightBackground:AppColors.darkBackground,
                             value: check71,
                             onChanged: switch1 == true ?  (bool value) {
 

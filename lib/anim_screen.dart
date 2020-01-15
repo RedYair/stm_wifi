@@ -5,15 +5,16 @@ import 'package:flutter/material.dart';
 
 import 'Colors/AppColors.dart';
 
-class Marquee extends StatefulWidget {
+class Anim extends StatefulWidget {
   Socket socket;
   bool sockOn;
-  Marquee({this.socket, this.sockOn});
+  Anim({this.socket, this.sockOn});
+
   @override
-  _MarqueeState createState() => _MarqueeState();
+  _AnimState createState() => _AnimState();
 }
 
-class _MarqueeState extends State<Marquee> {
+class _AnimState extends State<Anim> {
   bool check1 = false;
   bool check2 = false;
   bool check3 = false;
@@ -21,8 +22,7 @@ class _MarqueeState extends State<Marquee> {
   bool check5 = false;
   bool check6 = false;
   bool check7 = false;
-
-
+  bool switch1 = false;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -33,11 +33,36 @@ class _MarqueeState extends State<Marquee> {
           children: <Widget>[
             Container(
               padding: EdgeInsets.only(top: 20),
-              child: Text("MARQUESINAS",
+              child: Text("ANIMACIONES",
                 style: TextStyle(
                     color: widget.sockOn == true ? Colors.white:Colors.black,
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.only(top:10.0),
+                child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Text("Texto con\nAnimaciones",textAlign: TextAlign.center,style: TextStyle(
+                        color: widget.sockOn == true ? Colors.white:Colors.black, fontSize: 18)),
+                    Switch(
+                        inactiveTrackColor: Colors.blue,
+                        value: switch1,
+                        onChanged: (bool value) {
+                          setState(() {
+                            switch1 = value;
+
+                          });
+                          if(switch1)widget.socket.write("GET /A");
+                          else widget.socket.write("GET /B");
+                        }
+                    ),
+                    Text("Solo\nAnimaciones",textAlign: TextAlign.center,style: TextStyle(
+                        color: widget.sockOn == true ? Colors.white:Colors.black, fontSize: 18)),
+                  ],
                 ),
               ),
             ),
@@ -64,7 +89,7 @@ class _MarqueeState extends State<Marquee> {
                                       check7 = false;
                                       // _isDisabledCheck=true;
                                     });
-                                    if(check1)widget.socket.write("GET /M1");
+                                    if(check1)widget.socket.write("GET /A1");
                                   }
                               ),
                               Image.asset("assets/lklogo.png",
@@ -89,7 +114,7 @@ class _MarqueeState extends State<Marquee> {
                                       check7 = false;
                                       // _isDisabledCheck=true;
                                     });
-                                    if(check2)widget.socket.write("GET /M2");
+                                    if(check2)widget.socket.write("GET /A2");
                                   }
                               ),
                               Image.asset("assets/lklogo.png",
@@ -114,7 +139,7 @@ class _MarqueeState extends State<Marquee> {
                                       check7 = false;
                                       // _isDisabledCheck=true;
                                     });
-                                    if(check3)widget.socket.write("GET /M3");
+                                    if(check3)widget.socket.write("GET /A3");
                                   }
                               ),
                               Image.asset("assets/lklogo.png",
@@ -139,7 +164,7 @@ class _MarqueeState extends State<Marquee> {
                                       check7 = false;
                                       // _isDisabledCheck=true;
                                     });
-                                    if(check4)widget.socket.write("GET /M4");
+                                    if(check4)widget.socket.write("GET /A4");
                                   }
                               ),
                               Image.asset("assets/lklogo.png",
@@ -164,7 +189,7 @@ class _MarqueeState extends State<Marquee> {
                                       check7 = false;
                                       // _isDisabledCheck=true;
                                     });
-                                    if(check1)widget.socket.write("GET /M5");
+                                    if(check1)widget.socket.write("GET /A5");
                                   }
                               ),
                               Image.asset("assets/lklogo.png",

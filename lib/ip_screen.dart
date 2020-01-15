@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get_ip/get_ip.dart';
 import 'package:stm_wifi/letter_screen.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:stm_wifi/pointer_screen.dart';
 import 'Colors/AppColors.dart';
+import 'anim_screen.dart';
 import 'marquesina_Screen.dart';
 import 'messages_screen.dart';
 
@@ -47,7 +49,7 @@ class _IPScreenState extends State<IPScreen> {
 
     return SafeArea(
       child: DefaultTabController(
-        length: 4,
+        length: 6,
         initialIndex: 0,
         child: Scaffold(
           appBar: AppBar(
@@ -66,7 +68,9 @@ class _IPScreenState extends State<IPScreen> {
             Tab(icon: Icon(Icons.home)),
             Tab(icon: Icon(Icons.format_color_text)),
             Tab(icon: Icon(Icons.format_size)),
-            Tab(icon: Icon(Icons.border_clear))
+            Tab(icon: Icon(Icons.border_clear)),
+            Tab(icon: Icon(Icons.insert_emoticon)),
+            Tab(icon: Icon(Icons.zoom_out_map)),
          //   Tab(icon: Icon(Icons.favorite))
     ]),),
           body: TabBarView(
@@ -339,6 +343,8 @@ class _IPScreenState extends State<IPScreen> {
               Messages(socket: sock,sockOn: sockOn),
               LetterType(socket: sock,sockOn: sockOn),
               Marquee(socket: sock,sockOn: sockOn),
+              Anim(socket: sock,sockOn: sockOn),
+              Shift(socket: sock,sockOn: sockOn),
             ],
           ),
 
